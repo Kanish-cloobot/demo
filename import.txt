@@ -1,0 +1,153 @@
+import copy
+
+#json result duplication
+
+def duplicate_data(data):
+    if not any(isinstance(val, list) for val in data.values()):
+        return [copy.deepcopy(data)]
+
+    result = []
+    for key, value in data.items():
+        if isinstance(value, list):
+            for elem in value:
+                new_data = copy.deepcopy(data)
+                new_data[key] = elem
+                result.extend(duplicate_data(new_data))
+    
+    return result
+
+data = {
+    "1": "27/07/2023",
+    "2": 11,
+    "3":[ "A","B"],
+    "4": "slab",
+    "5": [2,3],
+    "6": "casting"
+}
+
+duplicated_data = duplicate_data(data)
+print(duplicated_data)
+
+
+
+
+
+
+import copy
+
+# The `duplicate_data` function takes a dictionary `data` as input and returns a list of duplicated dictionaries.
+def duplicate_data(data):
+    # Check if any value in the `data` dictionary is a list.
+    # If there are no lists, return a list containing a deep copy of the original `data` dictionary.
+    if not any(isinstance(val, list) for val in data.values()):
+        return [copy.deepcopy(data)]
+
+    result = []  # This list will store the duplicated dictionaries.
+
+    # Iterate over each key-value pair in the `data` dictionary.
+    for key, value in data.items():
+        # Check if the value is a list.
+        if isinstance(value, list):
+            # If it is a list, iterate over each element (elem) in the list.
+            for elem in value:
+                # Create a deep copy of the `data` dictionary to create a new instance.
+                new_data = copy.deepcopy(data)
+                # Replace the value at the current key (key) with the current element (elem) from the list.
+                new_data[key] = elem
+                # Recursively call the `duplicate_data` function with the modified dictionary (new_data).
+                # The recursive call will handle other lists (if any) and duplicate the dictionary accordingly.
+                # The result of the recursive call will be a list of duplicated dictionaries for this specific key.
+                # Extend the result list with the duplicates obtained from the recursive call.
+                result.extend(duplicate_data(new_data))
+    
+    # After processing all keys and values, return the list of duplicated dictionaries.
+    return result
+
+# The input data dictionary with one of the values as a list.
+data = {
+    "1": "27/07/2023",
+    "2": 11,
+    "3": ["A", "B"],
+    "4": "slab",
+    "5": 3,
+    "6": "casting"
+}
+
+# Call the `duplicate_data` function with the input data to obtain the duplicated dictionaries.
+duplicated_data = duplicate_data(data)
+
+# Print the result, which will be a list of dictionaries with all possible combinations of the list values.
+print(duplicated_data)
+
+
+
+
+
+
++===============================================================================
+import copy
+
+def duplicate_data(data, processed_keys=None):
+    if processed_keys is None:
+        processed_keys = set()
+
+    if not any(isinstance(val, list) for val in data.values()):
+        return [copy.deepcopy(data)]
+
+    result = []
+    for key, value in data.items():
+        if key not in processed_keys and isinstance(value, list):
+            processed_keys.add(key)
+            for elem in value:
+                new_data = copy.deepcopy(data)
+                new_data[key] = elem
+                result.extend(duplicate_data(new_data, processed_keys.copy()))  # Use a copy of the set here.
+    
+    return result
+
+data = {
+    "1": "27/07/2023",
+    "2": 11,
+    "3": ["A","B"],
+    "4": "slab",
+    "5": [2, 3],
+    "6": "casting"
+}
+
+duplicated_data = duplicate_data(data)
+print(duplicated_data)
+
+==============================================================================================================================
+#in the case of one combination
+import copy
+
+def duplicate_data(data, processed_keys=None):
+    if processed_keys is None:
+        processed_keys = set()
+
+    if not any(isinstance(val, list) for val in data.values()):
+        return [copy.deepcopy(data)]
+
+    result = []
+    for key, value in data.items():
+        if key not in processed_keys and isinstance(value, list):
+            processed_keys.add(key)
+            for elem in value:
+                new_data = copy.deepcopy(data)
+                new_data[key] = elem
+                result.extend(duplicate_data(new_data, processed_keys.copy()))  # Use a copy of the set here.
+    
+    return result
+
+data = {
+    "1": "27/07/2023",
+    "2": 11,
+    "3":7,
+    "4": "slab",
+    "5": 2,
+    "6": "casting"
+}
+
+duplicated_data = duplicate_data(data)
+print(duplicated_data)
+
